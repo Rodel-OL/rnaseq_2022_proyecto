@@ -39,7 +39,7 @@ rse_gene_SRP119465$assigned_gene_prop <- rse_gene_SRP119465$recount_qc.gene_fc_c
 summary(rse_gene_SRP119465$assigned_gene_prop)
 
 ## Plotting
-with(colData(rse_gene_SRP119465), plot(assigned_gene_prop, sra_attribute.disease))
+#with(colData(rse_gene_SRP119465), plot(assigned_gene_prop, sra_attribute.disease))
 #with(colData(rse_gene_SRP119465), plot(assigned_gene_prop, recount_qc.intron_sum_%))
 
 ## Histogram for bad quality gene information from samples
@@ -65,8 +65,36 @@ dge <- DGEList(
 dge <- calcNormFactors(dge)
 
 ## Differential Expression
+
+library("ggplot2")
+
+## Disease Group
+ggplot(as.data.frame(colData(rse_gene_SRP119465)), aes(y = assigned_gene_prop, x = sra_attribute.disease_stage)) +
+  geom_boxplot() +
+  theme_bw(base_size = 20) +
+  ylab("Assigned Gene Prop") +
+  xlab("Disease Group")
+
 ## Use of shiny?
+
+# library(ExploreModelMatrix)
+#
+# vd <- VisualizeDesign(
+#   sampleData = as.data.frame(colData(rse_gene_SRP119465)),
+#   designFormula = ~ assigned_gene_prop + assigned_gene_prop:sra_attribute.disease_stage + assigned_gene_prop:sra_attribute.disease + assigned_gene_prop:sra_attribute.age,
+#   textSizeFitted = 4
+# )
+# cowplot::plot_grid(plotlist = vd$plotlist, ncol = 1)
+
 ## Need to add a statistical model first, to then use limma
+mod <- model.matrix(~ sra_attribute.disease + sra_attribute.disease_stage + assigned_gene_prop,
+                    data = colData(rse_gene_SRP119465)
+)
+colnames(mod)
+
+## Expresion diferencial
+library("limma")
+vGene <- voom(dge, mod, plot = TRUE)
 
 library("iSEE")
 iSEE::iSEE(rse_gene_SRP119465)
