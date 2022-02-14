@@ -8,7 +8,7 @@ Recount3 tool in R was used to select a determined set of sequences belonging to
 
 ### Results
 
-Differential expression between the different stages of the disease (IIA nad IIIB) and the assigned gene proportion, where stage IIA can be spotted to have a different expression [Disease_Group_vs_AGP.png]
+Differential expression between the different stages of the disease (IIA nad IIIB) and the assigned gene proportion, where stage IIA can be spotted to have a different expression [Disease_Group_vs_AGP.png]https://github.com/Rodel-OL/rnaseq_2022_proyecto/blob/master/Disease_Group_vs_AGP.png
 
 A simple plot to compare the expression from different stages using the assigned gene prop field, that can be better seen in the first graph [Plot_assigned_gene_prop_vs_d_stage]
 
